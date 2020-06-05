@@ -29,7 +29,7 @@ def Crawler(qstring):
 @cross_origin()
 def index(q):
     q=q.replace(' ','+')
-    print(q)
+    #print(q)
     return Crawler(q)
 
 if __name__=="__main__":

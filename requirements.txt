@@ -1,17 +1,14 @@
 beautifulsoup4==4.9.1
-bs4==0.0.1
 certifi==2020.4.5.1
 chardet==3.0.4
 click==7.1.2
 Flask==1.1.2
 Flask-Cors==3.0.8
 gunicorn==20.0.4
-html-parser==0.2
 idna==2.9
 itsdangerous==1.1.0
 Jinja2==2.11.2
 MarkupSafe==1.1.1
-pkg-resources==0.0.0
 ply==3.11
 PyDispatcher==2.0.5
 requests==2.23.0

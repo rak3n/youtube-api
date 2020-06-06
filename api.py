@@ -29,11 +29,7 @@ def Crawler(qstring):
 @cross_origin()
 def index(q):
     q=q.replace(' ','+')
-    sour=str(request.headers['Host'])
-    if sour == 'reel-music-player.netlify.app':
-        return Crawler(q)
-    else:
-        return json.dumps([{'VideoId':sour,'title':sour,'url':sour}])
+    return Crawler(q)
 
 if __name__=="__main__":
     app.run(debug=True)

@@ -29,8 +29,8 @@ def Crawler(qstring):
 @cross_origin()
 def index(q):
     q=q.replace(' ','+')
-    site=request.headers['Host']
-    if request.headers['Host']=='https://reel-music-player.netlify.app/':
+    print str(request.url).split('/')[2]
+    if request.headers['Host']=='reel-music-player.netlify.app':
         return Crawler(q)
     else:
         return json.dumps([])

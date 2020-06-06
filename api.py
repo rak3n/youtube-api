@@ -1,7 +1,7 @@
 from bs4 import BeautifulSoup as bs
 import requests as rq
 import json
-from flask import Flask
+from flask import Flask,request,abort
 from flask_cors import cross_origin;
 
 app=Flask(__name__)
@@ -13,7 +13,7 @@ def Crawler(qstring):
     
     page=r.text
     soup=bs(page,'html.parser')
-    
+
     vids = soup.findAll('a',attrs={'class':'yt-uix-tile-link'})
     
     videolist=[]
@@ -29,8 +29,10 @@ def Crawler(qstring):
 @cross_origin()
 def index(q):
     q=q.replace(' ','+')
-    #print(q)
-    return Crawler(q)
+    if request.headers['Host']=='https://reel-music-player.netlify.app/':
+        return Crawler(q)
+    else:
+        return abort(403,description="Request not allowed. Contect the creator !")
 
 if __name__=="__main__":
     app.run(debug=True)

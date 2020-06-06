@@ -24,15 +24,21 @@ def Crawler(qstring):
     return json.dumps(videolist)
 
 #print(Crawler("imagine+dragon"))
+site=''
 
 @app.route('/youtube/<string:q>',methods=['POST','GET'])
 @cross_origin()
 def index(q):
     q=q.replace(' ','+')
+    site=request.headers['Host']
     if request.headers['Host']=='https://reel-music-player.netlify.app/':
         return Crawler(q)
     else:
         return abort(403,description="Request not allowed. Contect the creator !")
+
+@app.route('/home')
+def get():
+    return site
 
 if __name__=="__main__":
     app.run(debug=True)

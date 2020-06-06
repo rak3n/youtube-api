@@ -33,7 +33,7 @@ def index(q):
     if sour == 'reel-music-player.netlify.app':
         return Crawler(q)
     else:
-        return json.dumps([]{'VideoId':sour,'title':sour,'url':sour})
+        return json.dumps([{'VideoId':sour,'title':sour,'url':sour}])
 
 if __name__=="__main__":
     app.run(debug=True)

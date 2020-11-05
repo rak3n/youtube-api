@@ -1,5 +1,5 @@
 # youtube-search-results API
-This is a REStful API made in Flask to extract video information available on youtube, without using Google's YouTube Data V3 API.
+This is a RESTful API made in Flask to extract video information available on youtube, without using Google's YouTube Data V3 API.
 
 # How to try
 

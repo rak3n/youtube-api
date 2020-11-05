@@ -41,9 +41,9 @@ def Crawler(qstring):
     aid=soup.find('script',string=re.compile('ytInitialData'))
     #extracted_josn_text=str(aid).split(';')[0].replace('window["ytInitialData"] =','').strip()
     #print(str(aid).split(';')[0].split('\n')[1].replace('window["ytInitialData"] =','').strip())
-    extracted_josn_text=str(aid).split(';')[0].split('\n')[1].replace('window["ytInitialData"] =','').strip()
+    extracted_josn_text=str(aid).split(';')[0].split('\n')[2].replace('window["ytInitialData"] =','').strip()
     #print(extracted_josn_text)
-    video_results=json.loads(extracted_josn_text)
+    video_results=json.loads(extracted_josn_text[20:])
     #print(item_section=video_results["contents"]["twoColumnSearchResultsRenderer"]["primaryContents"]["sectionListRenderer"]["contents"][1])
     #print(video_results["contents"]["twoColumnSearchResultsRenderer"]["primaryContents"]["sectionListRenderer"]["contents"][0]["itemSectionRenderer"]["contents"][""])
     item_section=video_results["contents"]["twoColumnSearchResultsRenderer"]["primaryContents"]["sectionListRenderer"]["contents"][0]["itemSectionRenderer"]["contents"]

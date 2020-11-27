@@ -72,7 +72,7 @@ def Crawler(qstring):
     extracted_josn_text=str(aid).split(';')[0].split('\n')[0][39:]
     #print(extracted_josn_text)
     """
-    Filtering the no needed "ytInitialData =" syntax out of the page....
+    Filtering the no needed "ytInitialData =" syntax out of the page object....
     """
     video_results=json.loads(extracted_josn_text[20:])
     #print(item_section=video_results["contents"]["twoColumnSearchResultsRenderer"]["primaryContents"]["sectionListRenderer"]["contents"][1])

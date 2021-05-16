@@ -92,7 +92,7 @@ def Crawler(qstring):
     #print(extracted_josn_text)
 
     #if len(extracted_josn_text) > 0:
-    video_results=ast.literal_eval(str(extracted_josn_text))
+    video_results=json.loads(str(extracted_josn_text))
     print(video_results)
     item_section=video_results["contents"]["twoColumnSearchResultsRenderer"]["primaryContents"]["sectionListRenderer"]["contents"][0]["itemSectionRenderer"]["contents"]
     videolist=[]

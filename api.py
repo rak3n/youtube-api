@@ -34,7 +34,7 @@ def Crawler(qstring):
 #print(Crawler("imagine+dragon"))
 """
 
-"""V2: Ready to be used with new YouTube (EXPIRED)"""
+"""V2: Ready to be used with new YouTube (MODIFIED)"""
 def Crawler(qstring):
     headers={
     'User-Agent':'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/65.0.3325.181 Safari/537.36'
@@ -68,29 +68,34 @@ def Crawler(qstring):
     'ytInitialData' param/variable, it is important for operation of this API
     and resultant application :| 
     """
-    aid=soup.find('script',string=re.compile('ytInitialData'))
-    extracted_josn_text=str(aid).split(';')[0].split('\n')[0][39:]
-    #print(extracted_josn_text)
+    aid=str(soup.find('script',string=re.compile('ytInitialData')))
+    #print(aid)
+    #extracted_josn_text=str(aid).split(';')[0].split('\n')[0][39:]
+    
     """
     Filtering the no needed "ytInitialData =" syntax out of the page....
     """
-    video_results=json.loads(extracted_josn_text[20:])
-    #print(item_section=video_results["contents"]["twoColumnSearchResultsRenderer"]["primaryContents"]["sectionListRenderer"]["contents"][1])
-    #print(video_results["contents"]["twoColumnSearchResultsRenderer"]["primaryContents"]["sectionListRenderer"]["contents"][0]["itemSectionRenderer"]["contents"][""])
+    #print(extracted_josn_text)
+    start=-1
+    for i in range(len(aid)):
+        if aid[i]=='{':
+            start=i
+            break
+    end=len(aid)-1
+    for i in range(len(aid)-1, -1, -1):
+        if aid[i]=='}':
+            end=i
+            break
+    
+    extracted_josn_text=aid[start:end+1]
+    #print('--------->')
+    #print(extracted_josn_text)
+    video_results=json.loads(extracted_josn_text)
     item_section=video_results["contents"]["twoColumnSearchResultsRenderer"]["primaryContents"]["sectionListRenderer"]["contents"][0]["itemSectionRenderer"]["contents"]
     videolist=[]
 
     for item in item_section:
-        #print("---------------------------------------------------------------------------------------")
-        try:
-            #print(item["videoRenderer"]['videoId'])
-            #print(item["videoRenderer"]['title']['runs'][0]['text'])
-            #video_info=item["videoRenderer"]
-            #title=video_info["title"]["simpleText"]
-            #url=video_info["navigationEndpoint"]["commandMetadata"]["webCommandMetadata"]["url"]
-            #print('Title:',title)
-            #print('Url:',url)
-            
+        try:            
             vimg='https://i.ytimg.com/vi/'+ item["videoRenderer"]['videoId'] +'/hqdefault.jpg'
             videolist.append({'VideoId':item["videoRenderer"]['videoId'],'title':item["videoRenderer"]['title']['runs'][0]['text'],'url':vimg})
         except KeyError:

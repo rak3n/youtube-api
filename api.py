@@ -46,6 +46,7 @@ def Crawler(qstring):
     searched=rq.get(url,headers=headers, proxies=proxies)
     print(searched)
     soup=bs(searched.text,'html.parser')
+    print(soup)
     """
     V3 update (EXPIRED):
     Youtube stores data in window['ytInitialData'] keys which need to be
@@ -72,6 +73,7 @@ def Crawler(qstring):
     """
     aid=soup.find('script',string=re.compile('ytInitialData'))
     print(type(aid))
+    aid=str(aid)
     #extracted_josn_text=str(aid).split(';')[0].split('\n')[0][39:]
     """
     Filtering the no needed "ytInitialData =" syntax out of the page....

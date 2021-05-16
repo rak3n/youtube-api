@@ -87,7 +87,7 @@ def Crawler(qstring):
             end=i
             break
     
-    extracted_josn_text=aid[start:end+1]
+    extracted_josn_text=str(aid[start:end+1])
     #print('--------->')
     print(extracted_josn_text)
     video_results=json.loads(extracted_josn_text)

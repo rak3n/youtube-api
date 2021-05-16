@@ -91,7 +91,7 @@ def Crawler(qstring):
     #extracted_josn_text=str(extracted_josn_text).strip("'<>() ").replace('\'', '\"')
     print(extracted_josn_text)
     sys.stdout.flush()
-    video_results=json.loads(extracted_josn_text.replace("'", "\""))
+    video_results=json.loads(extracted_josn_text)
     item_section=video_results["contents"]["twoColumnSearchResultsRenderer"]["primaryContents"]["sectionListRenderer"]["contents"][0]["itemSectionRenderer"]["contents"]
     videolist=[]
 
@@ -109,11 +109,11 @@ def Crawler(qstring):
 @cross_origin()
 def index(q):
     q=q.replace(' ','+')
-    try:
-        return Crawler(q)
-    except:
-        return json.dumps([])
-    #return Crawler(q)
+    # try:
+    #     return Crawler(q)
+    # except:
+    #     return json.dumps([])
+    return Crawler(q)
 
 
 if __name__=="__main__":

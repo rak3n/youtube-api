@@ -91,7 +91,10 @@ def Crawler(qstring):
     #extracted_josn_text=str(extracted_josn_text).strip("'<>() ").replace('\'', '\"')
     print(extracted_josn_text)
     sys.stdout.flush()
-    video_results=json.loads(extracted_josn_text)
+    if len(extracted_josn_text) > 0:
+        video_results=json.loads(extracted_josn_text)
+    else:
+        video_results={}
     item_section=video_results["contents"]["twoColumnSearchResultsRenderer"]["primaryContents"]["sectionListRenderer"]["contents"][0]["itemSectionRenderer"]["contents"]
     videolist=[]
 

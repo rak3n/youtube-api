@@ -109,7 +109,10 @@ def Crawler(qstring):
 @cross_origin()
 def index(q):
     q=q.replace(' ','+')
-    return Crawler(q)
+    try:
+        return Crawler(q)
+    except:
+        return []
 
 if __name__=="__main__":
     app.run(debug=True)

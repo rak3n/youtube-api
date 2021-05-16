@@ -37,12 +37,13 @@ def Crawler(qstring):
 
 """V2: Ready to be used with new YouTube (MODIFIED)"""
 def Crawler(qstring):
+    proxies = { 'http': "http://167.99.112.187:8080"}
     headers={
     'User-Agent':'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/65.0.3325.181 Safari/537.36'
     }
 
     url='https://www.youtube.com/results?search_query='+qstring
-    searched=rq.get(url,headers=headers)
+    searched=rq.get(url,headers=headers, proxies=proxies)
     soup=bs(searched.text,'html.parser')
     """
     V3 update (EXPIRED):

@@ -9,7 +9,7 @@ import json
 import re
 from flask import Flask,request,abort
 from flask_cors import cross_origin;
-import ast
+import time
 
 app=Flask(__name__)
 
@@ -44,7 +44,8 @@ def Crawler(qstring):
 
     url='https://www.youtube.com/results?search_query='+qstring
     searched=rq.get(url,headers=headers, proxies=proxies)
-    print(searched)
+    time.sleep(1)
+    #print(searched)
     soup=bs(searched.text,'html.parser')
     print(soup)
     """
@@ -72,7 +73,7 @@ def Crawler(qstring):
     and resultant application :| 
     """
     aid=soup.find('script',string=re.compile('ytInitialData'))
-    print(type(aid))
+    #print(type(aid))
     aid=str(aid)
     #extracted_josn_text=str(aid).split(';')[0].split('\n')[0][39:]
     """

@@ -9,7 +9,7 @@ import json
 import re
 from flask import Flask,request,abort
 from flask_cors import cross_origin;
-import time
+import sys
 
 app=Flask(__name__)
 
@@ -88,9 +88,9 @@ def Crawler(qstring):
     
     extracted_josn_text=str(aid[start:end+1])
     #print('--------->')
-    time.sleep(0.5)
     #extracted_josn_text=str(extracted_josn_text).strip("'<>() ").replace('\'', '\"')
     print(extracted_josn_text)
+    sys.stdout.flush()
     video_results=json.loads(extracted_josn_text)
     item_section=video_results["contents"]["twoColumnSearchResultsRenderer"]["primaryContents"]["sectionListRenderer"]["contents"][0]["itemSectionRenderer"]["contents"]
     videolist=[]

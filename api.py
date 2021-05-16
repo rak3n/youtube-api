@@ -46,6 +46,7 @@ def Crawler(qstring):
     searched=rq.get(url,headers=headers, proxies=proxies)
     time.sleep(1)
     #print(searched)
+    return searched.text
     soup=bs(searched.text,'html.parser')
     print(soup)
     """

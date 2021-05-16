@@ -43,7 +43,6 @@ def Crawler(qstring):
     url='https://www.youtube.com/results?search_query='+qstring
     searched=rq.get(url,headers=headers)
     soup=bs(searched.text,'html.parser')
-    print(soup)
     """
     V3 update (EXPIRED):
     Youtube stores data in window['ytInitialData'] keys which need to be

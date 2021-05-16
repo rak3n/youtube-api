@@ -9,6 +9,7 @@ import json
 import re
 from flask import Flask,request,abort
 from flask_cors import cross_origin;
+import time
 
 app=Flask(__name__)
 
@@ -70,7 +71,6 @@ def Crawler(qstring):
     aid=str(soup.find('script',string=re.compile('ytInitialData')))
     #print(aid)
     #extracted_josn_text=str(aid).split(';')[0].split('\n')[0][39:]
-    
     """
     Filtering the no needed "ytInitialData =" syntax out of the page....
     """
@@ -88,7 +88,8 @@ def Crawler(qstring):
     
     extracted_josn_text=str(aid[start:end+1])
     #print('--------->')
-    extracted_josn_text=str(extracted_josn_text).strip("'<>() ").replace('\'', '\"')
+    time.sleep(0.5)
+    #extracted_josn_text=str(extracted_josn_text).strip("'<>() ").replace('\'', '\"')
     print(extracted_josn_text)
     video_results=json.loads(extracted_josn_text)
     item_section=video_results["contents"]["twoColumnSearchResultsRenderer"]["primaryContents"]["sectionListRenderer"]["contents"][0]["itemSectionRenderer"]["contents"]
@@ -112,6 +113,8 @@ def index(q):
         return Crawler(q)
     except:
         return json.dumps([])
+    #return Crawler(q)
+
 
 if __name__=="__main__":
     app.run(debug=True)

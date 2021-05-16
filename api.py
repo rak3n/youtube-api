@@ -38,6 +38,7 @@ def Crawler(qstring):
 """V2: Ready to be used with new YouTube (MODIFIED)"""
 def Crawler(qstring):
     proxies = { 'http': "socks5://206.123.14.245:4153"}
+    cookies = dict(CONSENT='YES+cb.20210509-17-p0.en-GB+FX+554')
     headers={
     'User-Agent':'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/65.0.3325.181 Safari/537.36'
     }

@@ -44,6 +44,7 @@ def Crawler(qstring):
 
     url='https://www.youtube.com/results?search_query='+qstring
     searched=rq.get(url,headers=headers, proxies=proxies)
+    print(searched)
     soup=bs(searched.text,'html.parser')
     """
     V3 update (EXPIRED):
@@ -69,8 +70,8 @@ def Crawler(qstring):
     'ytInitialData' param/variable, it is important for operation of this API
     and resultant application :| 
     """
-    aid=str(soup.find('script',string=re.compile('ytInitialData')))
-    print(aid)
+    aid=soup.find('script',string=re.compile('ytInitialData'))
+    print(type(aid))
     #extracted_josn_text=str(aid).split(';')[0].split('\n')[0][39:]
     """
     Filtering the no needed "ytInitialData =" syntax out of the page....

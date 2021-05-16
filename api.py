@@ -90,7 +90,7 @@ def Crawler(qstring):
     extracted_josn_text=str(aid[start:end+1])
     #print('--------->')
     print(extracted_josn_text)
-    video_results=json.loads(extracted_josn_text)
+    video_results=json.loads(str(extracted_josn_text))
     item_section=video_results["contents"]["twoColumnSearchResultsRenderer"]["primaryContents"]["sectionListRenderer"]["contents"][0]["itemSectionRenderer"]["contents"]
     videolist=[]
 

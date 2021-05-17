@@ -10,4 +10,4 @@ where <code>QUERY</code>is the keyword you wish to get info of, separated by '+'
 For eg: <code>https://search-results-api.herokuapp.com/youtube/alone+alan+walker</code>
 
 
-# Note: Latest Versio  in V5
+# Note: Latest Version  in V5

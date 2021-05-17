@@ -1,6 +1,7 @@
 Flask_Cors==3.0.8
 Flask==1.1.2
 pymongo==3.11.4
+dnspython
 beautifulsoup4==4.9.3
 certifi==2020.4.5.1
 chardet==3.0.4

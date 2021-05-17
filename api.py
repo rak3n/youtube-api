@@ -38,7 +38,7 @@ def Crawler(qstring):
 """V2: Ready to be used with new YouTube (MODIFIED)"""
 def Crawler(qstring):
     proxies = { 'http': "socks5://206.123.14.245:4153"}
-    cookies = dict(CONSENT='YES+cb.20210509-17-p0.en-GB+FX+554')
+    cookies = dict(NID='215=snzV4Zav-yu6zFsSruVerEC9rBPEo9dhs9ekAWIk1kBQCujaojCnvK3PaqEs21k8hUvg3CKRBuomOBlQh4fsWdcdUH-LHFYu-xIThjxKsRIpdgpX6e5Ot1DTYgCoCzAcvCX6R3vq_-1mUAyB8KmvoQhTwNAUwXro8HHKL7x-hqQ', PREF='f4=4000000&tz=Asia.Calcutta', GPS='1', VISITOR_INFO1_LIVE='T6I0_p41yvU', YSC='sIAXxVVyZLo', CONSENT='YES+cb.20210509-17-p0.en-GB+FX+345')
     headers={
     'User-Agent':'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/65.0.3325.181 Safari/537.36'
     }
@@ -50,6 +50,11 @@ def Crawler(qstring):
     return searched.text
     soup=bs(searched.text,'html.parser')
     print(soup)
+
+    """
+    Need to add selenium support for clicking over consent button on directly accessing youtube.com directly..
+    """
+
     """
     V3 update (EXPIRED):
     Youtube stores data in window['ytInitialData'] keys which need to be
@@ -75,7 +80,7 @@ def Crawler(qstring):
     and resultant application :| 
     """
     aid=soup.find('script',string=re.compile('ytInitialData'))
-    #print(type(aid))
+    #print(type(aid)        
     aid=str(aid)
     #extracted_josn_text=str(aid).split(';')[0].split('\n')[0][39:]
     """
@@ -127,3 +132,5 @@ def index(q):
 
 if __name__=="__main__":
     app.run(debug=True)
+
+

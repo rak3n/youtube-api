@@ -44,7 +44,7 @@ def Crawler(qstring):
     }
 
     url='https://www.youtube.com/results?search_query='+qstring
-    searched=rq.get(url,headers=headers, proxies=proxies)
+    searched=rq.get(url,headers=headers, proxies=proxies, cookies=cookies)
     time.sleep(1)
     #print(searched)
     return searched.text

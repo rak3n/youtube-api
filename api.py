@@ -47,7 +47,6 @@ def Crawler(qstring):
     searched=rq.get(url,headers=headers, proxies=proxies, cookies=cookies)
     time.sleep(1)
     #print(searched)
-    return searched.text
     soup=bs(searched.text,'html.parser')
     print(soup)
 
@@ -127,7 +126,10 @@ def index(q):
     #     return Crawler(q)
     # except:
     #     return json.dumps([])
-    return Crawler(q)
+    try:
+        return Crawler(q)
+    except: 
+        return json.dumps([])
 
 
 if __name__=="__main__":

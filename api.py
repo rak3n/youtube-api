@@ -10,7 +10,8 @@ from flask import Flask,request,abort
 from flask_cors import cross_origin;
 import pymongo
 
-client=pymongo.MongoClient("mongodb+srv://admin:admin1234@cluster0.qtnrv.mongodb.net/myFirstDatabase?retryWrites=true&w=majority")
+# change username and password with monogoDB creds
+client=pymongo.MongoClient("mongodb+srv://<username>:<password>@cluster0.qtnrv.mongodb.net/myFirstDatabase?retryWrites=true&w=majority")
 db=client['youtube-chacher']
 app=Flask(__name__)
 

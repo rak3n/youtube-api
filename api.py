@@ -2,41 +2,30 @@
 Things are painful ahead, go through the code with patience.....
 This fight is gonna go for long, very long...
 """
-
 from bs4 import BeautifulSoup as bs
 import requests as rq
 import json
 import re
 from flask import Flask,request,abort
 from flask_cors import cross_origin;
-import time
+import pymongo
 
+client=pymongo.MongoClient("mongodb+srv://admin:admin1234@cluster0.qtnrv.mongodb.net/myFirstDatabase?retryWrites=true&w=majority")
+db=client['youtube-chacher']
 app=Flask(__name__)
 
-"""V1: Doesn't work with new updated youtube !!!! (EXPIRED)
+def mem_chacher(search_string):
+    res=db['cached-search'].find_one({'search_string': search_string})
+    print('memchached invoke')
+    return res
+
 def Crawler(qstring):
-    base="https://www.youtube.com/results?search_query="
-    
-    r=rq.get(base+qstring)
-    #print(r.content)
-    page=r.content
-    soup=bs(page,'html.parser')
 
-    #vids = soup.findAll('a',attrs={'class':'yt-uix-tile-link'})
-    vids = soup.findAll('a',attrs={'id':'video-title'})
-    print(soup.find('div'))
-    videolist=[]
-    for v in vids:
-        vimg='https://i.ytimg.com/vi/'+ v['href'][9:] +'/hqdefault.jpg'
-        videolist.append({'VideoId':v['href'][9:],'title':v['title'],'url':vimg})
-    
-    return json.dumps(videolist)
+    available_in_memchache =  mem_chacher(qstring)
 
-#print(Crawler("imagine+dragon"))
-"""
+    if available_in_memchache:
+        return available_in_memchache['result']
 
-"""V2: Ready to be used with new YouTube (MODIFIED)"""
-def Crawler(qstring):
     proxies = { 'http': "socks5://206.123.14.245:4153"}
     cookies = dict(NID='215=snzV4Zav-yu6zFsSruVerEC9rBPEo9dhs9ekAWIk1kBQCujaojCnvK3PaqEs21k8hUvg3CKRBuomOBlQh4fsWdcdUH-LHFYu-xIThjxKsRIpdgpX6e5Ot1DTYgCoCzAcvCX6R3vq_-1mUAyB8KmvoQhTwNAUwXro8HHKL7x-hqQ', PREF='f4=4000000&tz=Asia.Calcutta', GPS='1', VISITOR_INFO1_LIVE='T6I0_p41yvU', YSC='sIAXxVVyZLo', CONSENT='YES+cb.20210509-17-p0.en-GB+FX+345')
     headers={
@@ -45,47 +34,12 @@ def Crawler(qstring):
 
     url='https://www.youtube.com/results?search_query='+qstring
     searched=rq.get(url,headers=headers, proxies=proxies, cookies=cookies)
-    time.sleep(1)
-    #print(searched)
     soup=bs(searched.text,'html.parser')
-    print(soup)
-
-    """
-    Need to add selenium support for clicking over consent button on directly accessing youtube.com directly..
-    """
-
-    """
-    V3 update (EXPIRED):
-    Youtube stores data in window['ytInitialData'] keys which need to be
-    parsed to use stuff for furthur process
-
-    Note: Though this thing is expired but was efficient to keep scarrper
-    out of the page, and also tool me a hell lot of time to fix XP.
-
-    
-    extracted_josn_text=str(aid).split(';')[0].replace('window["ytInitialData"] =','').strip()
-    print(str(aid).split(';')[0].split('\n')[0][59:])
-    extracted_josn_text=str(aid).split(';')[0].split('\n')[2].replace('window["ytInitialData"] =','').strip()
-    """
-
-
-    """
-    V4 update (CURRENT):
-    Youtube now secures/preserves data in one key under script tag with
-    no utilization of window["ytInitialData"]
-
-    Note: In case of further updates keep in kind to take a keen note of
-    'ytInitialData' param/variable, it is important for operation of this API
-    and resultant application :| 
-    """
     aid=soup.find('script',string=re.compile('ytInitialData'))
-    #print(type(aid)        
     aid=str(aid)
-    #extracted_josn_text=str(aid).split(';')[0].split('\n')[0][39:]
     """
     Filtering the no needed "ytInitialData =" syntax out of the page....
     """
-    #print(extracted_josn_text)
     start=-1
     for i in range(len(aid)):
         if aid[i]=='{':
@@ -98,13 +52,8 @@ def Crawler(qstring):
             break
     
     extracted_josn_text=str(aid[start:end+1])
-    #print('--------->')
-    #extracted_josn_text=str(extracted_josn_text).strip("'<>() ").replace('\'', '\"')
-    #print(extracted_josn_text)
 
-    #if len(extracted_josn_text) > 0:
     video_results=json.loads(str(extracted_josn_text))
-    print(video_results)
     item_section=video_results["contents"]["twoColumnSearchResultsRenderer"]["primaryContents"]["sectionListRenderer"]["contents"][0]["itemSectionRenderer"]["contents"]
     videolist=[]
 
@@ -115,24 +64,20 @@ def Crawler(qstring):
         except KeyError:
             pass
     #print(len(videolist))
-    return json.dumps(videolist)
-
+    add_res={'search_string': qstring, 'result':json.dumps(videolist)}
+    db['cached-search'].insert_one(add_res)
+    return add_res['result']
 
 @app.route('/youtube/<string:q>',methods=['POST','GET'])
 @cross_origin()
 def index(q):
     q=q.replace(' ','+')
-    # try:
-    #     return Crawler(q)
-    # except:
-    #     return json.dumps([])
     try:
         return Crawler(q)
-    except: 
+    except Exception as e: 
+        print(e)
         return json.dumps([])
 
 
 if __name__=="__main__":
     app.run(debug=True)
-
-
